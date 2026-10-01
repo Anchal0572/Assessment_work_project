@@ -1,15 +1,16 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { ArrowRight, Mail, Sparkles } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function CTA() {
   const ctaRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       gsap.fromTo(
         '.cta-element',
         { opacity: 0, y: 35, scale: 0.96 },
@@ -27,10 +28,9 @@ export default function CTA() {
           },
         }
       );
-    }, ctaRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: ctaRef }
+  );
 
   return (
     <section
@@ -70,9 +70,7 @@ export default function CTA() {
           </a>
 
           <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:contact@itzfizz.digital"
             className="inline-flex items-center gap-2 px-6 py-4 rounded-full text-sm font-medium text-neutral-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 transition-colors"
           >
             <Mail className="w-4 h-4 text-purple-400" />

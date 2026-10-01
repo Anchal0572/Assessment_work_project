@@ -1,22 +1,20 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import HeroStats from './HeroStats';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Hero() {
   const heroRef = useRef(null);
   const scrollIndicatorRef = useRef(null);
 
-  const headline = 'WELCOME ITZFIZZ';
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const mm = gsap.matchMedia();
 
-      // Check if user prefers reduced motion
       mm.add(
         {
           noPreference: '(prefers-reduced-motion: no-preference)',
@@ -137,10 +135,11 @@ export default function Hero() {
           });
         }
       );
-    }, heroRef);
+    },
+    { scope: heroRef }
+  );
 
-    return () => ctx.revert();
-  }, []);
+  const headlineWords = ['WELCOME', 'ITZFIZZ'];
 
   return (
     <section
@@ -167,24 +166,24 @@ export default function Hero() {
 
         {/* Large Headline with strong letter spacing: W E L C O M E   I T Z F I Z Z */}
         <h1
-          className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-[0.16em] sm:tracking-[0.22em] text-white leading-tight uppercase select-none"
+          className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-[0.16em] sm:tracking-[0.22em] text-white leading-tight uppercase select-none flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6"
           aria-label="WELCOME ITZFIZZ"
         >
-          {headline.split('').map((char, index) => (
-            <span
-              key={index}
-              className="hero-char inline-block opacity-0 transform-gpu transition-colors duration-200 hover:text-cyan-300"
-              style={{
-                marginRight: char === ' ' ? '0.45em' : '0.02em',
-                background:
-                  index >= 8
-                    ? 'linear-gradient(135deg, #a855f7 0%, #06b6d4 100%)'
-                    : undefined,
-                WebkitBackgroundClip: index >= 8 ? 'text' : undefined,
-                WebkitTextFillColor: index >= 8 ? 'transparent' : undefined,
-              }}
-            >
-              {char === ' ' ? '\u00A0' : char}
+          {headlineWords.map((word, wIdx) => (
+            <span key={wIdx} className="inline-block whitespace-nowrap">
+              {word.split('').map((char, cIdx) => (
+                <span
+                  key={cIdx}
+                  className={`hero-char inline-block opacity-0 transform-gpu transition-colors duration-200 hover:text-cyan-300 ${
+                    wIdx === 1
+                      ? 'bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent'
+                      : 'text-white'
+                  }`}
+                  style={{ marginRight: '0.04em' }}
+                >
+                  {char}
+                </span>
+              ))}
             </span>
           ))}
         </h1>

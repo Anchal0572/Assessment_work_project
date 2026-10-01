@@ -1,15 +1,16 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Code2, Cpu, Globe2, ShieldCheck } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import { Sparkles, Code2, Cpu, Globe2 } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function About() {
   const sectionRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       gsap.fromTo(
         '.about-reveal',
         { opacity: 0, y: 35 },
@@ -26,10 +27,9 @@ export default function About() {
           },
         }
       );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: sectionRef }
+  );
 
   const pillars = [
     {

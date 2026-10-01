@@ -1,20 +1,21 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { Layers, Compass, Cpu, Activity } from 'lucide-react';
 import ScrollVisual from './ScrollVisual';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ScrollAnimation() {
   const sectionRef = useRef(null);
   const visualWrapperRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const mm = gsap.matchMedia();
 
-      // Desktop layout (> 768px)
+      // Desktop layout (> 768px) & Mobile (<= 768px)
       mm.add(
         {
           isDesktop: '(min-width: 769px) and (prefers-reduced-motion: no-preference)',
@@ -210,10 +211,9 @@ export default function ScrollAnimation() {
             );
         }
       );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: sectionRef }
+  );
 
   return (
     <section

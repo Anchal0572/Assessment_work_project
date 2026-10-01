@@ -1,24 +1,26 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // Navbar entrance animation
       gsap.fromTo(
         navRef.current,
         { opacity: 0, y: -25 },
         { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.1 }
       );
-    }, navRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: navRef }
+  );
 
   useEffect(() => {
     const handleScroll = () => {
