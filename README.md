@@ -20,8 +20,7 @@ The hero section features a futuristic digital 3D-isometric artifact (`.scroll-v
 
 ## 🚀 Live Demo & Links
 
-- **Live Demo**: [Live Demo](https://chatgpt.com/c/YOUR_DEPLOYED_URL)
-- **GitHub Repository**: [GitHub Repository](https://chatgpt.com/c/YOUR_GITHUB_URL)
+- **GitHub Repository**: [Anchal0572/Assessment_work_project](https://github.com/Anchal0572/Assessment_work_project)
 
 ---
 
@@ -77,8 +76,8 @@ The hero section features a futuristic digital 3D-isometric artifact (`.scroll-v
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YOUR_GITHUB_URL.git
-   cd assessment
+   git clone https://github.com/Anchal0572/Assessment_work_project.git
+   cd Assessment_work_project
    ```
 
 2. **Install dependencies**:
